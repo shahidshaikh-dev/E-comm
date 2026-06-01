@@ -1,0 +1,242 @@
+@use "variables.scss";
+
+// -------------------- TEXT COLORS --------------------
+
+.accent-text-color {
+  color: variables.$accent-color;
+}
+
+.darkgrey-text-color {
+  color: variables.$text-secondary;
+}
+
+.lightgrey-text-color {
+  color: variables.$text-light;
+}
+
+.grey-shade2 {
+  color: variables.$grey-50;
+}
+
+.grey-shade1 {
+  color: variables.$grey-60;
+}
+
+.dark-red {
+  color: variables.$error-color;
+}
+
+.text-black-color {
+  color: variables.$text-primary;
+}
+
+.text-light-black-color {
+  color: variables.$grey-70;
+}
+
+.green-text-color {
+  color: variables.$success-color;
+}
+
+.grey-shade-color {
+  color: variables.$text-light;
+}
+
+.light-brown-color {
+  color: variables.$accent-color;
+}
+
+// NEW FONT COLOR CLASSES
+
+.text-white {
+  color: variables.$text-white;
+}
+
+.text-light-green {
+  color: variables.$success-color;
+}
+
+.text-light-green-2 {
+  color: variables.$success-color;
+}
+
+.text-black-secondary {
+  color: variables.$background-secondary;
+}
+
+/* ================= RED TEXT (NEW OPTIONAL) ================= */
+.text-red {
+  color: variables.$red-color;
+}
+
+// -------------------- BACKGROUND COLORS --------------------
+
+.bg-dark-yellow {
+  background-color: variables.$accent-color;
+}
+
+.bg-darkgreen {
+  background-color: variables.$success-color;
+}
+
+.bg-light-green {
+  background-color: variables.$success-bg;
+}
+
+.bg-light-green-2 {
+  background-color: variables.$success-bg;
+}
+
+.bg-white {
+  background-color: variables.$background-white;
+}
+
+.bg-light-yellow {
+  background-color: #fff8e8;
+}
+
+/* ================= RED BACKGROUNDS (NEW) ================= */
+.bg-red {
+  background-color: variables.$background-red;
+}
+
+.bg-red-light {
+  background-color: variables.$red-bg;
+}
+
+// GREY SCALE BACKGROUNDS
+
+.bg-yellow-0 {
+  background-color: variables.$grey-0;
+}
+
+.bg-yellow-05 {
+  background-color: variables.$grey-05;
+}
+
+.bg-yellow-10 {
+  background-color: variables.$grey-10;
+}
+
+.bg-yellow-20 {
+  background-color: variables.$grey-20;
+}
+
+.bg-yellow-30 {
+  background-color: variables.$grey-30;
+}
+
+.bg-yellow-40 {
+  background-color: variables.$grey-40;
+}
+
+.bg-yellow-45 {
+  background-color: variables.$grey-50;
+}
+
+.bg-yellow-50 {
+  background-color: variables.$grey-60;
+}
+
+.bg-yellow-60 {
+  background-color: variables.$grey-70;
+}
+
+.bg-yellow-70 {
+  background-color: variables.$grey-80;
+}
+
+.bg-yellow-80 {
+  background-color: variables.$primary-color;
+}
+
+// BRAND COLORS
+
+.bg-blue {
+  background-color: variables.$primary-color;
+}
+
+.bg-dark-blue {
+  background-color: variables.$background-secondary;
+}
+
+.bg-purple-1 {
+  background-color: variables.$accent-light;
+}
+
+.bg-purple-2 {
+  background-color: variables.$accent-color;
+}
+
+.bg-lightgrey {
+  background-color: variables.$grey-10;
+}
+
+.bg-lightgrey-2 {
+  background: variables.$grey-05;
+}
+
+.bg-black {
+  background: variables.$primary-color;
+}
+
+.bg-light-grey1 {
+  background: variables.$border-light;
+}
+
+.bg-orange {
+  background: variables.$accent-color;
+}
+
+.bg-green {
+  background: variables.$success-color;
+}
+
+// ---------------- BORDER CLASSES ----------------
+
+.border-light-grey1 {
+  border-color: variables.$border-light;
+}
+
+.border-light-grey2 {
+  border-color: variables.$border-medium;
+}
+
+.border-light-grey3 {
+  border-color: variables.$grey-20;
+}
+
+.border-dark-grey {
+  border-color: variables.$border-dark;
+}
+
+.border-black {
+  border-color: variables.$primary-color;
+}
+
+/* ================= RED BORDER (OPTIONAL) ================= */
+.border-red {
+  border-color: variables.$red-color;
+}
+
+// ---------------- COMMON UTILITY COLORS ----------------
+
+.body-bg {
+  background-color: variables.$body-color;
+}
+
+.card-bg {
+  background-color: variables.$card-bg;
+}
+
+.input-bg {
+  background-color: variables.$input-bg;
+}
+
+.input-border {
+  border-color: variables.$input-border;
+}
+
+.shadow-theme {
+  box-shadow: 0 4px 18px variables.$card-shadow;
+}

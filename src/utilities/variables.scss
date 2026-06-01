@@ -1,0 +1,116 @@
+// ================= PRIMARY BRAND COLOR =================
+$primary-color: #231F20;
+$primary-light: #322d2e;
+$primary-dark: #181516;
+
+// ================= BODY / BACKGROUND =================
+$body-color: #f6f5f4;
+
+$background-white: #ffffff;
+$background-light: #f8f8f8;
+$background-dark: #231F20;
+$background-secondary: #2d292a;
+
+/* NEW RED BACKGROUND COLOR */
+$background-red: #dc2626;
+
+// ================= TEXT COLORS =================
+$text-primary: #231F20;
+$text-secondary: #5f5f5f;
+$text-light: #8c8c8c;
+$text-muted: #a0a0a0;
+$text-white: #ffffff;
+
+// ================= BORDER COLORS =================
+$border-light: #e7e7e7;
+$border-medium: #d6d6d6;
+$border-dark: #3a3536;
+$border-color: #e7e7e7;
+
+// ================= BUTTON COLORS =================
+$button-primary-bg: #231F20;
+$button-primary-hover: #322d2e;
+$button-primary-text: #ffffff;
+
+$button-secondary-bg: #f3f3f3;
+$button-secondary-hover: #e5e5e5;
+$button-secondary-text: #231F20;
+
+// ================= SECONDARY COLORS =================
+$secondary-color: #f3f3f3;
+$secondary-light: #e5e5e5;
+
+// ================= ACCENT COLORS =================
+$accent-color: #c89b3c;
+$accent-light: #e6c676;
+
+$success-color: #1f8f4d;
+$error-color: #e5484d;
+$warning-color: #ffb020;
+
+/* NEW RED COLOR */
+$red-color: #dc2626;
+
+// ================= GREY SHADES =================
+$grey-0: #fafafa;
+$grey-05: #f5f5f5;
+$grey-10: #eeeeee;
+$grey-20: #dddddd;
+$grey-30: #c7c7c7;
+$grey-40: #a8a8a8;
+$grey-50: #8a8a8a;
+$grey-60: #6b6b6b;
+$grey-70: #4d4d4d;
+$grey-80: #2e2e2e;
+
+// ================= CARD / SURFACE =================
+$card-bg: #ffffff;
+$card-border: #ececec;
+$card-shadow: rgba(35, 31, 32, 0.08);
+
+// ================= INPUT COLORS =================
+$input-bg: #ffffff;
+$input-border: #dddddd;
+$input-focus-border: #231F20;
+$input-placeholder: #9a9a9a;
+
+// ================= STATUS BACKGROUNDS =================
+$success-bg: #edf9f1;
+$error-bg: #fff1f1;
+$warning-bg: #fff7e8;
+
+/* NEW RED BACKGROUND */
+$red-bg: #fef2f2;
+
+// ================= EXTRA =================
+$light-black: #383838;
+$black-color: #121315;
+$black-secondary: #252629;
+
+// ================= LEGACY SUPPORT VARIABLES =================
+$light-grey-color: $text-light;
+$dark-grey-color: $text-secondary;
+$grey-shade1: $grey-60;
+$grey-shade2: $grey-50;
+
+$border-light-grey1: $border-light;
+$border-light-grey2: $border-medium;
+$border-light-grey3: $card-border;
+
+$button-secondary-bg-color: $button-secondary-bg;
+$button-tertiary-bg-color: $error-color;
+
+$green-color: $success-color;
+$light-green: #3ddc84;
+$light-green-2: #68f0a8;
+
+$lightgrey: $grey-10;
+$lightgrey-2: $grey-05;
+
+$background-orange: $warning-color;
+
+/* NEW LEGACY RED BACKGROUND */
+$background-red-color: $background-red;
+
+$light-grey-shade-color: $text-secondary;
+$light-brown-color: $accent-color;

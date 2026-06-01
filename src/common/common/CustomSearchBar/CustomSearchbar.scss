@@ -1,0 +1,29 @@
+@use '../../../utilities/variables.scss';
+
+.custom-searchbar {
+  .ant-input-affix-wrapper {
+    // width: 1170px !important;
+    height: 40px;
+    border-radius: 5px;
+    border-color: #7B7B7B;
+
+    &:hover {
+      border-color: #000000;
+    }
+
+    &:focus-within,
+    &.ant-input-focused {
+      border-color: #7B7B7B !important;
+      box-shadow: unset !important;
+    }
+    .ant-input {
+      font-size: 14px;
+    }
+
+    .ant-input::placeholder {
+      color: variables.$grey-shade2;
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+}

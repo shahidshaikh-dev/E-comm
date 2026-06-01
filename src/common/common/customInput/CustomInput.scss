@@ -1,0 +1,223 @@
+@use "../../../utilities/variables.scss";
+
+/* REMOVE ALL INPUT RADIUS */
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-input-password,
+.ant-input-outlined,
+.input-field {
+  border-radius: 0 !important;
+}
+
+.uppercase-input {
+  .ant-input,
+  .ant-input-affix-wrapper,
+  .input-field {
+    text-transform: uppercase !important;
+
+    &::placeholder {
+      text-transform: none !important;
+    }
+  }
+}
+
+.custom-common-input.largeInput {
+  height: auto;
+
+  .input-container {
+    height: 50px;
+    border: 1px solid variables.$border-medium;
+    border-radius: 0 !important; // changed
+    background: variables.$background-white;
+    width: 100%;
+
+    &:focus-within {
+      border-color: variables.$primary-color !important;
+      border-width: 1px !important;
+      outline: none !important;
+    }
+
+    &.disabled {
+      .ant-input-outlined {
+        border: none !important;
+      }
+
+      background: variables.$grey-10;
+      cursor: not-allowed;
+
+      .input-field,
+      .input-label {
+        color: variables.$text-primary;
+        background: transparent;
+        cursor: not-allowed;
+      }
+    }
+
+    &.error {
+      .input-label {
+        color: variables.$error-color !important;
+      }
+    }
+
+    &.verified {
+      border-color: variables.$success-color !important;
+
+      &:focus-within {
+        border-width: 2px;
+      }
+
+      .input-label {
+        color: variables.$success-color;
+      }
+    }
+
+    &.relative {
+      &:focus-within {
+        border-color: variables.$primary-color;
+        border-width: 2px;
+      }
+
+      .input-field {
+        height: 24px;
+        position: absolute;
+        top: 28%;
+        padding: 0 0 0 12px;
+        z-index: 2;
+        border: none;
+        background: transparent;
+        box-shadow: none;
+        border-radius: 0 !important;
+      }
+
+      .input-label {
+        display: flex;
+        align-items: center;
+        height: 24px;
+        top: 28%;
+        font-size: 16px;
+        color: variables.$grey-60;
+        padding: 0 0 0 12px;
+        z-index: 1;
+        position: absolute;
+        transition: top 0.3s, font-size 0.3s, color 0.3s;
+      }
+    }
+
+    &.flex {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+      text-align: center;
+
+      &:focus-within {
+        border-color: variables.$primary-color;
+        border-width: 2px;
+      }
+
+      .input-label {
+        height: 16px;
+        color: variables.$grey-60;
+        font-size: 12px;
+        font-weight: 500;
+        text-align: left;
+        padding: 0 0 0 12px;
+        display: flex;
+        align-items: center;
+      }
+
+      .input-field {
+        padding: 0 0 0 12px;
+        border: none;
+        box-shadow: none;
+        border-radius: 0 !important;
+        font-size: 18px;
+        font-weight: 500;
+        color: variables.$text-primary;
+      }
+    }
+  }
+
+  .error-message {
+    padding-left: 0;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16.8px;
+    margin-top: 6px;
+    color: #ff4d4f !important;
+  }
+}
+
+.custom-common-input.smallInput {
+  height: auto;
+
+  .input-container {
+    height: 40px;
+    border: 1px solid variables.$border-light;
+    border-radius: 0 !important; // changed
+    background: variables.$background-white;
+    width: 100%;
+    display: flex;
+
+    &:focus-within {
+      border-color: variables.$primary-color;
+      border-width: 1px !important;
+      outline: none !important;
+    }
+
+    &.disabled {
+      background: variables.$grey-10 !important;
+      cursor: not-allowed;
+      border: none !important;
+
+      .ant-input-outlined {
+        border: none !important;
+      }
+
+      input {
+        color: variables.$text-secondary !important;
+        font-weight: 500;
+        font-size: 14px !important;
+        border: none !important;
+      }
+
+      &:focus-within {
+        border-width: 2px;
+        border-color: variables.$primary-color;
+      }
+    }
+
+    &.error {
+      border-color: variables.$error-color !important;
+
+      &:focus-within {
+        border-width: 2px;
+        border-color: variables.$error-color !important;
+        box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.15);
+      }
+
+      .ant-input,
+      .ant-input-affix-wrapper,
+      .ant-input-password {
+        border-color: variables.$error-color !important;
+        box-shadow: none !important;
+      }
+    }
+
+    &.verified {
+      border-color: variables.$success-color !important;
+
+      &:focus-within {
+        border-width: 2px;
+      }
+    }
+  }
+
+  .error-message {
+    padding-left: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16.8px;
+    margin-top: 6px;
+    color: #ff4d4f !important;
+  }
+}
