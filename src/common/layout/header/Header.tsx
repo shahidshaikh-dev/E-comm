@@ -92,7 +92,7 @@ function Header() {
     navigate("/login");
   };
 
- return (
+return (
   <>
     {/* TOP BAR */}
     <div className="fixed top-0 left-0 w-full h-9 bg-black z-60 flex items-center justify-center px-4">
@@ -114,6 +114,7 @@ function Header() {
     <header className="fixed top-9 left-0 w-full bg-white border-b border-gray-200 z-50">
       <div className="max-w-7xl mx-auto h-17.5 px-6 flex items-center justify-between">
 
+        {/* LOGO */}
         <div
           onClick={() => navigate("/products")}
           className="cursor-pointer hidden md:block"
@@ -121,6 +122,7 @@ function Header() {
           <h1 className="text-[28px] font-bold">E-comm</h1>
         </div>
 
+        {/* NAV */}
         <nav className="hidden md:flex items-center gap-10">
           <NavLink
             to="/products"
@@ -157,6 +159,7 @@ function Header() {
             {/* DESKTOP SEARCH */}
             <div className="hidden lg:block">
               <div className="h-9.5 bg-[#f5f5f5] rounded flex items-center px-3">
+
                 <CustomSearchbar
                   name="search"
                   value={searchTerm}
@@ -165,17 +168,18 @@ function Header() {
                     setSearchTerm((e.target as HTMLInputElement).value)
                   }
                   placeholder="What are you looking for?"
-                  className="border-none! w-75! bg-transparent! text-sm! flex-1 min-w-0 pr-6"
+                  className="!border-none w-[300px] !bg-transparent !text-sm pr-8"
                 />
 
-                <div className="flex items-center shrink-0 ml-2">
+                {/* ICON FIXED */}
+                <div className="flex items-center shrink-0 ml-2 w-5 h-5 justify-center">
                   {searchTerm ? (
                     <button
                       onClick={() => {
                         setSearchTerm("");
                         setSearchResults([]);
                       }}
-                      className="flex items-center justify-center w-5 h-5"
+                      className="w-5 h-5 flex items-center justify-center"
                     >
                       <X className="w-4 h-4 text-gray-500" />
                     </button>
@@ -186,7 +190,7 @@ function Header() {
               </div>
             </div>
 
-            {/* MOBILE SEARCH (TAKES FREED SPACE) */}
+            {/* MOBILE SEARCH */}
             <div className="lg:hidden flex-1 max-w-55">
               <div className="h-9 bg-[#f5f5f5] rounded flex items-center px-2">
 
@@ -198,16 +202,17 @@ function Header() {
                     setSearchTerm((e.target as HTMLInputElement).value)
                   }
                   placeholder="Search..."
-                  className="border-none! bg-transparent! text-sm! flex-1 min-w-0"
+                  className="!border-none !bg-transparent !text-sm flex-1 min-w-0 pr-7"
                 />
 
-                <div className="flex items-center shrink-0 ml-1">
+                <div className="flex items-center shrink-0 ml-1 w-5 h-5 justify-center">
                   {searchTerm ? (
                     <button
                       onClick={() => {
                         setSearchTerm("");
                         setSearchResults([]);
                       }}
+                      className="w-5 h-5 flex items-center justify-center"
                     >
                       <X className="w-4 h-4 text-gray-500" />
                     </button>
@@ -220,7 +225,7 @@ function Header() {
 
             {/* DROPDOWN */}
             {searchResults.length > 0 && (
-              <div className="absolute top-12 left-0 w-87.5 bg-white shadow-lg z-50 max-h-80 overflow-auto">
+              <div className="absolute top-12 left-0 w-[350px] bg-white shadow-lg z-50 max-h-80 overflow-auto">
                 {searchResults.map((product) => (
                   <div
                     key={product.id}
@@ -243,6 +248,7 @@ function Header() {
             )}
           </div>
 
+          {/* ❤️ WISHLIST */}
           <button
             onClick={() => navigate("/wishlist")}
             className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 relative"
