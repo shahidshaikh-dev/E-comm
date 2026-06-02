@@ -12,8 +12,6 @@ import ProfileModal from "../../layout/header/ProfileModal";
 
 import { Search, Heart, ShoppingCart, X } from "lucide-react";
 
-/* ================= HEADER ================= */
-
 function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,21 +23,14 @@ function Header() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
-  /* ================= REDUX ================= */
+  const [isMobileSearchActive, setIsMobileSearchActive] = useState(false);
 
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
-
   const wishlistItems = useSelector((state: RootState) => state.wishlist.items);
-
-  const cartCount = cartItems.reduce(
-    (acc: number, item: any) => acc + item.quantity,
-    0,
-  );
 
   const wishlistCount = wishlistItems.length;
 
-  /* ================= DEBOUNCE ================= */
-
+  /* ================= debounce ================= */
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchTerm);
@@ -48,8 +39,7 @@ function Header() {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  /* ================= SEARCH API ================= */
-
+  /* ================= search ================= */
   useEffect(() => {
     const controller = new AbortController();
 
@@ -60,30 +50,27 @@ function Header() {
       }
 
       try {
-        const response = await fetch(
+        const res = await fetch(
           `https://dummyjson.com/products/search?q=${debouncedSearch}`,
-          { signal: controller.signal },
+          { signal: controller.signal }
         );
 
-        if (!response.ok) throw new Error("API error");
-
-        const data = await response.json();
-
-        setSearchResults(Array.isArray(data.products) ? data.products : []);
-      } catch (error: any) {
-        if (error.name !== "AbortError") {
-          console.error(error);
+        const data = await res.json();
+        setSearchResults(data.products || []);
+      } catch (err: any) {
+        if (err.name !== "AbortError") {
           toast.error("Search failed");
         }
       }
     };
 
     fetchProducts();
-
     return () => controller.abort();
   }, [debouncedSearch]);
 
-  /* ================= LOGOUT ================= */
+  useEffect(() => {
+    if (!searchTerm) setIsMobileSearchActive(false);
+  }, [searchTerm]);
 
   const confirmLogout = () => {
     dispatch(logout());
@@ -92,243 +79,171 @@ function Header() {
     navigate("/login");
   };
 
-return (
-  <>
-    {/* TOP BAR */}
-    <div className="fixed top-0 left-0 w-full h-9 bg-black z-60 flex items-center justify-center px-4">
-      <div className="w-full max-w-7xl flex items-center justify-center relative text-white text-xs">
-        <p className="text-center">
-          Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
-          <span className="ml-2 underline font-semibold cursor-pointer">
-            ShopNow
-          </span>
-        </p>
-
-        <div className="absolute right-0 flex items-center gap-1 cursor-pointer">
-          <span>English</span>
+  return (
+    <>
+      {/* TOP BAR */}
+      <div className="fixed top-0 left-0 w-full h-9 bg-black z-60 flex items-center justify-center px-4">
+        <div className="w-full max-w-7xl flex items-center justify-center relative text-white text-xs">
+          <p className="text-center">
+            Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
+            <span className="ml-2 underline font-semibold cursor-pointer">
+              ShopNow
+            </span>
+          </p>
         </div>
       </div>
-    </div>
 
-    {/* HEADER */}
-    <header className="fixed top-9 left-0 w-full bg-white border-b border-gray-200 z-50">
-      <div className="max-w-7xl mx-auto h-17.5 px-6 flex items-center justify-between">
+      {/* HEADER */}
+      <header className="fixed top-9 left-0 w-full bg-white border-b z-50">
+        <div className="max-w-7xl mx-auto h-17.5 px-6 flex items-center justify-between">
 
-        {/* LOGO */}
-        <div
-          onClick={() => navigate("/products")}
-          className="cursor-pointer hidden md:block"
-        >
-          <h1 className="text-[28px] font-bold">E-comm</h1>
-        </div>
-
-        {/* NAV */}
-        <nav className="hidden md:flex items-center gap-10">
-          <NavLink
-            to="/products"
-            className={({ isActive }) =>
-              isActive
-                ? "text-black border-b border-black pb-1 text-sm"
-                : "text-gray-700 hover:text-black text-sm"
-            }
+          {/* LOGO */}
+          <div
+            onClick={() => navigate("/products")}
+            className="cursor-pointer hidden md:block"
           >
-            Home
-          </NavLink>
-
-          <button className="text-sm text-gray-700 hover:text-black">
-            Contact
-          </button>
-
-          <button className="text-sm text-gray-700 hover:text-black">
-            About
-          </button>
-
-          <button
-            onClick={() => navigate("/signUp")}
-            className="text-sm text-gray-700 hover:text-black"
-          >
-            Sign Up
-          </button>
-        </nav>
-
-        {/* RIGHT SIDE */}
-        <div className="flex items-center gap-5 flex-1 md:flex-none justify-end">
-
-          <div className="relative flex items-center">
-
-            {/* DESKTOP SEARCH */}
-            <div className="hidden lg:block">
-              <div className="h-9.5 bg-[#f5f5f5] rounded flex items-center px-3">
-
-                <CustomSearchbar
-                  name="search"
-                  value={searchTerm}
-                  setSearchValue={setSearchTerm}
-                  onChange={(e) =>
-                    setSearchTerm((e.target as HTMLInputElement).value)
-                  }
-                  placeholder="What are you looking for?"
-                  className="!border-none w-[300px] !bg-transparent !text-sm pr-8"
-                />
-
-                {/* ICON FIXED */}
-                <div className="flex items-center shrink-0 ml-2 w-5 h-5 justify-center">
-                  {searchTerm ? (
-                    <button
-                      onClick={() => {
-                        setSearchTerm("");
-                        setSearchResults([]);
-                      }}
-                      className="w-5 h-5 flex items-center justify-center"
-                    >
-                      <X className="w-4 h-4 text-gray-500" />
-                    </button>
-                  ) : (
-                    <Search className="w-5 h-5 text-black" />
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* MOBILE SEARCH */}
-            <div className="lg:hidden flex-1 max-w-55">
-              <div className="h-9 bg-[#f5f5f5] rounded flex items-center px-2">
-
-                <CustomSearchbar
-                  name="search"
-                  value={searchTerm}
-                  setSearchValue={setSearchTerm}
-                  onChange={(e) =>
-                    setSearchTerm((e.target as HTMLInputElement).value)
-                  }
-                  placeholder="Search..."
-                  className="!border-none !bg-transparent !text-sm flex-1 min-w-0 pr-7"
-                />
-
-                <div className="flex items-center shrink-0 ml-1 w-5 h-5 justify-center">
-                  {searchTerm ? (
-                    <button
-                      onClick={() => {
-                        setSearchTerm("");
-                        setSearchResults([]);
-                      }}
-                      className="w-5 h-5 flex items-center justify-center"
-                    >
-                      <X className="w-4 h-4 text-gray-500" />
-                    </button>
-                  ) : (
-                    <Search className="w-4 h-4 text-black" />
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* DROPDOWN */}
-            {searchResults.length > 0 && (
-              <div className="absolute top-12 left-0 w-[350px] bg-white shadow-lg z-50 max-h-80 overflow-auto">
-                {searchResults.map((product) => (
-                  <div
-                    key={product.id}
-                    onClick={() => {
-                      navigate(`/productDetails/${product.id}`);
-                      setSearchTerm("");
-                      setSearchResults([]);
-                    }}
-                    className="flex items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer"
-                  >
-                    <img
-                      src={product.thumbnail}
-                      alt={product.title}
-                      className="w-10 h-10 object-cover rounded"
-                    />
-                    <div className="text-sm truncate">{product.title}</div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <h1 className="text-[28px] font-bold">E-comm</h1>
           </div>
 
-          {/* ❤️ WISHLIST */}
-          <button
-            onClick={() => navigate("/wishlist")}
-            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 relative"
-          >
-            <Heart
-              className="w-5 h-5"
-              fill={wishlistCount > 0 ? "red" : "transparent"}
-              color={wishlistCount > 0 ? "red" : "black"}
-            />
-
-            {wishlistCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
-                {wishlistCount}
-              </span>
-            )}
-          </button>
-
-          {/* CART */}
-          <button
-            onClick={() => navigate("/cart")}
-            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100"
-          >
-            <Badge
-              count={cartItems.reduce(
-                (acc: number, item: any) => acc + item.quantity,
-                0
-              )}
-              size="small"
-            >
-              <ShoppingCart className="w-5 h-5" />
-            </Badge>
-          </button>
-
-          {/* PROFILE */}
-          <div className="relative">
-            <button
-              onClick={() => setShowProfileMenu(!showProfileMenu)}
-              className="w-9 h-9 rounded-full bg-black text-white flex items-center justify-center"
-            >
-              S
+          {/* NAV */}
+          <nav className="hidden md:flex items-center gap-10">
+            <NavLink to="/products" className="text-sm">
+              Home
+            </NavLink>
+            <button className="text-sm">Contact</button>
+            <button className="text-sm">About</button>
+            <button onClick={() => navigate("/signUp")} className="text-sm">
+              Sign Up
             </button>
+          </nav>
 
-            {showProfileMenu && (
-              <div className="absolute right-0 top-12 w-48 bg-white border rounded-xl shadow-xl p-2 z-50">
-                <button
-                  onClick={() => {
-                    navigate("/profile");
-                    setShowProfileMenu(false);
-                  }}
-                  className="w-full text-left px-3 py-2 hover:bg-gray-100 text-sm"
-                >
-                  My Profile
-                </button>
+          {/* RIGHT SIDE */}
+          <div className="flex items-center gap-5">
 
-                <button
-                  onClick={() => {
-                    setShowLogoutModal(true);
-                    setShowProfileMenu(false);
-                  }}
-                  className="w-full text-left px-3 py-2 hover:bg-red-50 text-red-500 text-sm"
-                >
-                  Logout
-                </button>
+            {/* SEARCH */}
+            <div className="relative flex items-center">
+
+              {/* DESKTOP */}
+              <div className="hidden lg:block">
+                <div className="h-9.5 bg-[#f5f5f5] rounded flex items-center px-3">
+                  <CustomSearchbar
+                    name="search"
+                    value={searchTerm}
+                    setSearchValue={setSearchTerm}
+                    onChange={(e) =>
+                      setSearchTerm((e.target as HTMLInputElement).value)
+                    }
+                    placeholder="Search..."
+                    className="!border-none w-[300px] !bg-transparent !text-sm"
+                  />
+                  <Search className="w-5 h-5 ml-2" />
+                </div>
               </div>
-            )}
+
+              {/* MOBILE */}
+              <div className="lg:hidden w-full">
+                <div
+                  className={`h-9 bg-[#f5f5f5] rounded flex items-center px-2 transition-all ${
+                    isMobileSearchActive ? "w-full" : "max-w-55"
+                  }`}
+                >
+                  <CustomSearchbar
+                    name="search"
+                    value={searchTerm}
+                    setSearchValue={setSearchTerm}
+                    onFocus={() => setIsMobileSearchActive(true)}
+                    onChange={(e) => {
+                      setSearchTerm((e.target as HTMLInputElement).value);
+                      setIsMobileSearchActive(true);
+                    }}
+                    placeholder="Search..."
+                    className="!border-none !bg-transparent flex-1"
+                  />
+
+                  {searchTerm ? (
+                    <button
+                      onClick={() => {
+                        setSearchTerm("");
+                        setSearchResults([]);
+                        setIsMobileSearchActive(false);
+                      }}
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <Search className="w-4 h-4" />
+                  )}
+                </div>
+              </div>
+
+              {/* DROPDOWN */}
+              {searchResults.length > 0 && (
+                <div className="absolute top-12 left-0 w-[350px] bg-white shadow-lg z-50 max-h-80 overflow-auto">
+                  {searchResults.map((p) => (
+                    <div
+                      key={p.id}
+                      onClick={() => {
+                        navigate(`/productDetails/${p.id}`);
+                        setSearchTerm("");
+                        setSearchResults([]);
+                      }}
+                      className="p-2 hover:bg-gray-100 cursor-pointer flex gap-2"
+                    >
+                      <img src={p.thumbnail} className="w-10 h-10" />
+                      <span className="text-sm">{p.title}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* ICONS (FIXED LOGIC) */}
+            <div
+              className={`flex items-center gap-5 ${
+                isMobileSearchActive ? "hidden lg:flex" : "flex"
+              }`}
+            >
+
+              <button onClick={() => navigate("/wishlist")}>
+                <Heart className="w-5 h-5" />
+              </button>
+
+              <button onClick={() => navigate("/cart")}>
+                <ShoppingCart className="w-5 h-5" />
+              </button>
+
+              <button
+                onClick={() => setShowProfileMenu(!showProfileMenu)}
+                className="w-9 h-9 bg-black text-white rounded-full"
+              >
+                S
+              </button>
+
+              {showProfileMenu && (
+                <div className="absolute right-0 top-12 bg-white border p-2">
+                  <button onClick={() => navigate("/profile")}>
+                    My Profile
+                  </button>
+                  <button onClick={() => setShowLogoutModal(true)}>
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+
           </div>
-
         </div>
-      </div>
-    </header>
+      </header>
 
-    <div className="h-26.5" />
+      <div className="h-26.5" />
 
-    <ProfileModal
-      open={showLogoutModal}
-      onCancel={() => setShowLogoutModal(false)}
-      onConfirm={confirmLogout}
-    />
-  </>
-);
+      <ProfileModal
+        open={showLogoutModal}
+        onCancel={() => setShowLogoutModal(false)}
+        onConfirm={confirmLogout}
+      />
+    </>
+  );
 }
 
 export default Header;
