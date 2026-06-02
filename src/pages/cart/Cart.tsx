@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import type { RootState } from "../../store/store";
-
+import type { RootState } from "../../store/slices/store";
 import {
   removeFromCart,
   incrementQuantity,

@@ -1,9 +1,8 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
 import cartReducer from "./cartSlice";
-import wishlistReducer from "./wishlistSlice"; // ✅ ADD ONLY THIS
+import wishlistReducer from "./wishlistSlice";
 
-import * as storageImport from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 
 const storage = {
@@ -26,16 +25,19 @@ const storage = {
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
-  wishlist: wishlistReducer, // ✅ ADD ONLY THIS
+  wishlist: wishlistReducer,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "cart", "wishlist"], // ✅ ADD ONLY THIS
+  whitelist: ["auth", "cart", "wishlist"],
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(
+  persistConfig,
+  rootReducer
+);
 
 export const store = configureStore({
   reducer: persistedReducer,
@@ -46,3 +48,6 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

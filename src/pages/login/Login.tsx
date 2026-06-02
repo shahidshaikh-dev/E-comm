@@ -36,13 +36,10 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // 🔥 STEP 1: get users from localStorage
       const users = JSON.parse(localStorage.getItem("users") || "[]");
 
-      // normalize email
       const email = data.email.trim().toLowerCase();
 
-      // 🔥 STEP 2: find user
       const registeredUser = users.find(
         (u: any) => u.email === email
       );
@@ -53,14 +50,12 @@ const Login = () => {
         return;
       }
 
-      // 🔥 STEP 3: validate password
       if (registeredUser.password !== data.password) {
         toast.error("Invalid email or password");
         setIsLoading(false);
         return;
       }
 
-      // 🔥 STEP 4: store session in Redux
       dispatch(
         setCredentials({
           user: registeredUser,
@@ -126,43 +121,58 @@ const Login = () => {
               )}
             />
 
-            {/* PASSWORD */}
-            <Controller
-              name="password"
-              control={control}
-              rules={{
-                required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
-                },
-                validate: {
-                  hasNumber: (value) =>
-                    /\d/.test(value) ||
-                    "Password must contain at least 1 number",
+          {/* PASSWORD */}
+<Controller
+  name="password"
+  control={control}
+  rules={{
+    required: "Password is required",
 
-                  hasLetter: (value) =>
-                    /[a-zA-Z]/.test(value) ||
-                    "Password must contain at least 1 letter",
+    minLength: {
+      value: 8,
+      message: "Password must be at least 8 characters",
+    },
 
-                  noSpaces: (value) =>
-                    !/\s/.test(value) ||
-                    "Password cannot contain spaces",
-                },
-              }}
-              render={({ field }) => (
-                <CustomInput
-                  wrapperClass="smallInput"
-                  placeholder="Password"
-                  type="password"
-                  value={field.value}
-                  onChange={(e: any) =>
-                    field.onChange(e.target.value)
-                  }
-                  errors={errors.password?.message}
-                />
-              )}
-            />
+    maxLength: {
+      value: 64,
+      message: "Password cannot exceed 64 characters",
+    },
+
+    validate: {
+      hasUppercase: (value) =>
+        /[A-Z]/.test(value) ||
+        "Password must contain at least 1 uppercase letter",
+
+      hasLowercase: (value) =>
+        /[a-z]/.test(value) ||
+        "Password must contain at least 1 lowercase letter",
+
+      hasNumber: (value) =>
+        /\d/.test(value) ||
+        "Password must contain at least 1 number",
+
+      hasSpecialCharacter: (value) =>
+        /[!@#$%^&*(),.?":{}|<>_\-+=/\\[\]`~]/.test(value) ||
+        "Password must contain at least 1 special character",
+
+      noSpaces: (value) =>
+        !/\s/.test(value) ||
+        "Password cannot contain spaces",
+    },
+  }}
+  render={({ field }) => (
+    <CustomInput
+      wrapperClass="smallInput"
+      placeholder="Password"
+      type="password"
+      value={field.value}
+      onChange={(e: any) =>
+        field.onChange(e.target.value)
+      }
+      errors={errors.password?.message}
+    />
+  )}
+/>
 
             <CustomButton
               title={isLoading ? "Logging in..." : "Login"}

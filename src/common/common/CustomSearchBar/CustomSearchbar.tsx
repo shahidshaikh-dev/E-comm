@@ -42,7 +42,6 @@ export const CustomSearchbar = React.memo(
 					onChange(event);
 				}, debounce);
 			} else {
-				// no delay run always
 				onChange(event);
 			}
 		};
@@ -89,22 +88,7 @@ export const CustomSearchbar = React.memo(
 						}}
 					/>
 				</Tooltip>
-				{/* {needFilter ? (
-					<Tooltip
-						placement='bottom'
-						title={'Filter'}
-					>
-						<img
-							src='/images/icons/filter.svg'
-							style={{ width: '35px' }}
-							onClick={onFilterClick}
-							alt='filter'
-							className='ms-1 cursor-pointer'
-						/>
-					</Tooltip>
-				) : (
-					''
-				)} */}
+				{/*  */}
 			</div>
 		);
 	}

@@ -42,9 +42,7 @@ const SignUp = () => {
       const email = data.email.trim().toLowerCase();
 
       // ❗ check duplicate user
-      const alreadyExists = users.find(
-        (u: any) => u.email === email
-      );
+      const alreadyExists = users.find((u: any) => u.email === email);
 
       if (alreadyExists) {
         toast.error("User already exists");
@@ -119,28 +117,42 @@ const SignUp = () => {
               )}
             />
 
-            {/* PASSWORD (STRONG VALIDATION) */}
+            {/* PASSWORD */}
             <Controller
               name="password"
               control={control}
               rules={{
                 required: "Password is required",
+
                 minLength: {
                   value: 8,
                   message: "Password must be at least 8 characters",
                 },
+
+                maxLength: {
+                  value: 64,
+                  message: "Password cannot exceed 64 characters",
+                },
+
                 validate: {
+                  hasUppercase: (value) =>
+                    /[A-Z]/.test(value) ||
+                    "Password must contain at least 1 uppercase letter",
+
+                  hasLowercase: (value) =>
+                    /[a-z]/.test(value) ||
+                    "Password must contain at least 1 lowercase letter",
+
                   hasNumber: (value) =>
                     /\d/.test(value) ||
                     "Password must contain at least 1 number",
 
-                  hasLetter: (value) =>
-                    /[a-zA-Z]/.test(value) ||
-                    "Password must contain at least 1 letter",
+                  hasSpecialCharacter: (value) =>
+                    /[!@#$%^&*(),.?":{}|<>_\-+=/\\[\]`~]/.test(value) ||
+                    "Password must contain at least 1 special character",
 
                   noSpaces: (value) =>
-                    !/\s/.test(value) ||
-                    "Password cannot contain spaces",
+                    !/\s/.test(value) || "Password cannot contain spaces",
                 },
               }}
               render={({ field }) => (
@@ -149,9 +161,7 @@ const SignUp = () => {
                   placeholder="Password"
                   type="password"
                   value={field.value}
-                  onChange={(e: any) =>
-                    field.onChange(e.target.value)
-                  }
+                  onChange={(e: any) => field.onChange(e.target.value)}
                   errors={errors.password?.message}
                 />
               )}
@@ -172,9 +182,7 @@ const SignUp = () => {
                   placeholder="Confirm Password"
                   type="password"
                   value={field.value}
-                  onChange={(e: any) =>
-                    field.onChange(e.target.value)
-                  }
+                  onChange={(e: any) => field.onChange(e.target.value)}
                   errors={errors.confirmPassword?.message}
                 />
               )}
