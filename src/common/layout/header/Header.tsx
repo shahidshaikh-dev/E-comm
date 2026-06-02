@@ -27,17 +27,13 @@ function Header() {
 
   /* ================= REDUX ================= */
 
-  const cartItems = useSelector(
-    (state: RootState) => state.cart.cartItems
-  );
+  const cartItems = useSelector((state: RootState) => state.cart.cartItems);
 
-  const wishlistItems = useSelector(
-    (state: RootState) => state.wishlist.items
-  );
+  const wishlistItems = useSelector((state: RootState) => state.wishlist.items);
 
   const cartCount = cartItems.reduce(
     (acc: number, item: any) => acc + item.quantity,
-    0
+    0,
   );
 
   const wishlistCount = wishlistItems.length;
@@ -66,7 +62,7 @@ function Header() {
       try {
         const response = await fetch(
           `https://dummyjson.com/products/search?q=${debouncedSearch}`,
-          { signal: controller.signal }
+          { signal: controller.signal },
         );
 
         if (!response.ok) throw new Error("API error");
@@ -117,7 +113,6 @@ function Header() {
       {/* HEADER */}
       <header className="fixed top-9 left-0 w-full bg-white border-b border-gray-200 z-50">
         <div className="max-w-7xl mx-auto h-[70px] px-6 flex items-center justify-between">
-
           {/* LOGO */}
           <div onClick={() => navigate("/products")} className="cursor-pointer">
             <h1 className="text-[28px] font-bold!">E-comm</h1>
@@ -154,10 +149,8 @@ function Header() {
 
           {/* RIGHT SIDE */}
           <div className="flex items-center gap-5">
-
             {/* SEARCH */}
             <div className="relative hidden lg:block">
-
               <div className="h-[38px] bg-[#f5f5f5] rounded flex items-center px-3">
                 <CustomSearchbar
                   name="search"
@@ -184,35 +177,32 @@ function Header() {
                 )}
               </div>
 
-           {/* ✅ SEARCH DROPDOWN WITH IMAGES */}
-{searchResults.length > 0 && (
-  <div className="absolute top-12 left-0 w-[350px] bg-white  shadow-lg  z-50 max-h-80 overflow-auto">
-    {searchResults.map((product) => (
-      <div
-        key={product.id}
-        onClick={() => {
-          navigate(`/product/${product.id}`);
-          setSearchTerm("");
-          setSearchResults([]);
-        }}
-        className="flex items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer"
-      >
-        {/* PRODUCT IMAGE */}
-        <img
-          src={product.thumbnail}
-          alt={product.title}
-          className="w-10 h-10 object-cover rounded"
-        />
+              {/* ✅ SEARCH DROPDOWN WITH IMAGES */}
+              {searchResults.length > 0 && (
+                <div className="absolute top-12 left-0 w-[350px] bg-white  shadow-lg  z-50 max-h-80 overflow-auto">
+                  {searchResults.map((product) => (
+                    <div
+                      key={product.id}
+                      onClick={() => {
+                        navigate(`/productDetails/${product.id}`);
+                        setSearchTerm("");
+                        setSearchResults([]);
+                      }}
+                      className="flex items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      {/* PRODUCT IMAGE */}
+                      <img
+                        src={product.thumbnail}
+                        alt={product.title}
+                        className="w-10 h-10 object-cover rounded"
+                      />
 
-        {/* TITLE */}
-        <div className="text-sm truncate">
-          {product.title}
-        </div>
-      </div>
-    ))}
-  </div>
-)}
-
+                      {/* TITLE */}
+                      <div className="text-sm truncate">{product.title}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* ❤️ WISHLIST */}
@@ -241,7 +231,7 @@ function Header() {
               <Badge
                 count={cartItems.reduce(
                   (acc: number, item: any) => acc + item.quantity,
-                  0
+                  0,
                 )}
                 size="small"
               >
@@ -282,7 +272,6 @@ function Header() {
                 </div>
               )}
             </div>
-
           </div>
         </div>
       </header>

@@ -15,23 +15,28 @@ import "./index.css";
 
 import type { RootState } from "./store/slices/store.ts";
 
-/* ================= AUTH GUARD ================= */
+/* ================= PROTECTED ROUTE ================= */
 
-interface ProtectedRouteProps {
+interface RouteProps {
   children: JSX.Element;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children }: RouteProps) => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated,
   );
 
-  // safer guard (prevents flicker edge cases)
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+};
 
-  return children;
+/* ================= PUBLIC ROUTE ================= */
+
+const PublicRoute = ({ children }: RouteProps) => {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated,
+  );
+
+  return !isAuthenticated ? children : <Navigate to="/products" replace />;
 };
 
 /* ================= APP ================= */
@@ -42,12 +47,29 @@ function App() {
       <ToastContainer position="top-right" autoClose={2000} />
 
       <Routes>
-        {/* Public Routes */}
+        {/* Root */}
         <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signUp" element={<SignUp />} />
 
-        {/* Protected Routes Wrapper */}
+        {/* Public Routes */}
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/signUp"
+          element={
+            <PublicRoute>
+              <SignUp />
+            </PublicRoute>
+          }
+        />
+
+        {/* Protected Routes */}
         <Route
           element={
             <ProtectedRoute>
@@ -55,7 +77,6 @@ function App() {
             </ProtectedRoute>
           }
         >
-          {/* Default route after login */}
           <Route index element={<Navigate to="/products" replace />} />
 
           <Route path="/products" element={<Products />} />
@@ -65,8 +86,20 @@ function App() {
           <Route path="/wishlist" element={<WishList />} />
         </Route>
 
-        {/* fallback (IMPORTANT: avoid redirect loops) */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        {/* Fallback */}
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to={
+                useSelector((state: RootState) => state.auth.isAuthenticated)
+                  ? "/products"
+                  : "/login"
+              }
+              replace
+            />
+          }
+        />
       </Routes>
     </>
   );
